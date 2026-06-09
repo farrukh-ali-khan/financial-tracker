@@ -30,16 +30,16 @@
 
 ## Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Desktop shell | Tauri 2 |
-| Frontend | React 18 + TypeScript 5 + Vite 5 |
-| Styling | Tailwind CSS 3 |
-| State | Zustand 4 |
-| Database | SQLite via tauri-plugin-sql |
-| Charts | Recharts |
-| Icons | Lucide React |
-| Export | xlsx + jsPDF + jspdf-autotable |
+| Layer         | Technology                       |
+| ------------- | -------------------------------- |
+| Desktop shell | Tauri 2                          |
+| Frontend      | React 18 + TypeScript 5 + Vite 5 |
+| Styling       | Tailwind CSS 3                   |
+| State         | Zustand 4                        |
+| Database      | SQLite via tauri-plugin-sql      |
+| Charts        | Recharts                         |
+| Icons         | Lucide React                     |
+| Export        | xlsx + jsPDF + jspdf-autotable   |
 
 ---
 
@@ -47,14 +47,14 @@
 
 Go to the [Releases](../../releases) page and download for your platform:
 
-| Platform | File |
-|---|---|
-| Linux (any distro) | `.AppImage` |
-| Ubuntu / Debian | `.deb` |
-| Fedora / RHEL | `.rpm` |
-| Windows | `.msi` |
+| Platform            | File          |
+| ------------------- | ------------- |
+| Linux (any distro)  | `.AppImage`   |
+| Ubuntu / Debian     | `.deb`        |
+| Fedora / RHEL       | `.rpm`        |
+| Windows             | `.msi`        |
 | macOS Apple Silicon | `aarch64.dmg` |
-| macOS Intel | `x86_64.dmg` |
+| macOS Intel         | `x86_64.dmg`  |
 
 ---
 
@@ -67,6 +67,7 @@ Go to the [Releases](../../releases) page and download for your platform:
 - Tauri CLI: `cargo install tauri-cli --version "^2.0"`
 
 **Linux only — system dependencies:**
+
 ```bash
 sudo apt install -y libwebkit2gtk-4.1-dev build-essential libssl-dev \
   pkg-config librsvg2-dev libxdo-dev libayatana-appindicator3-dev
@@ -94,11 +95,11 @@ cargo tauri build
 
 All data is stored **locally on your machine** in SQLite:
 
-| OS | Location |
-|---|---|
-| Linux | `~/.local/share/com.financialtracker.app/` |
-| Windows | `%APPDATA%\com.financialtracker.app\` |
-| macOS | `~/Library/Application Support/com.financialtracker.app/` |
+| OS      | Location                                                  |
+| ------- | --------------------------------------------------------- |
+| Linux   | `~/.local/share/com.financialtracker.app/`                |
+| Windows | `%APPDATA%\com.financialtracker.app\`                     |
+| macOS   | `~/Library/Application Support/com.financialtracker.app/` |
 
 No data is ever sent to any server. The app works completely offline.
 
@@ -116,7 +117,7 @@ From **Settings → Export Data**:
 
 ## License
 
-MIT License — see [LICENSE](LICENSE) for details.
+MIT License — see LICENSE for details.
 
 ---
 
