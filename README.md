@@ -62,8 +62,8 @@ Go to the [Releases](../../releases) page and download for your platform:
 
 ### Prerequisites
 
-- [Rust](https://rustup.rs/) (stable)
-- Node.js 20+ (via [nvm](https://github.com/nvm-sh/nvm))
+- Rust (stable)
+- Node.js 20+ (via nvm)
 - Tauri CLI: `cargo install tauri-cli --version "^2.0"`
 
 **Linux only — system dependencies:**
