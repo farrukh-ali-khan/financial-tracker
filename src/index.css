@@ -1,0 +1,118 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --sidebar-width: 240px;
+    --topbar-height: 60px;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    @apply bg-slate-950 text-slate-100 font-sans;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    user-select: none;
+  }
+
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { @apply bg-slate-900; }
+  ::-webkit-scrollbar-thumb { @apply bg-slate-700 rounded-full; }
+  ::-webkit-scrollbar-thumb:hover { @apply bg-slate-600; }
+
+  input, textarea, select { user-select: text; }
+}
+
+@layer components {
+  .card { @apply bg-slate-900 border border-slate-800 rounded-2xl; }
+
+  .input {
+    @apply w-full bg-slate-800 border border-slate-700 text-slate-100
+           placeholder-slate-500 rounded-xl px-4 py-2.5 text-sm
+           focus:outline-none focus:ring-2 focus:ring-brand-500 focus:border-transparent
+           transition-all duration-150;
+  }
+
+  .label { @apply block text-sm font-medium text-slate-400 mb-1.5; }
+
+  .btn-primary {
+    @apply bg-brand-600 hover:bg-brand-500 text-white font-medium
+           px-5 py-2.5 rounded-xl text-sm transition-all duration-150
+           focus:outline-none focus:ring-2 focus:ring-brand-400
+           disabled:opacity-50 disabled:cursor-not-allowed active:scale-95;
+  }
+
+  .btn-ghost {
+    @apply bg-slate-800 hover:bg-slate-700 text-slate-300 font-medium
+           px-5 py-2.5 rounded-xl text-sm transition-all duration-150
+           focus:outline-none focus:ring-2 focus:ring-slate-600
+           disabled:opacity-50 active:scale-95;
+  }
+
+  .btn-danger {
+    @apply bg-red-600/20 hover:bg-red-600/30 text-red-400 font-medium
+           px-5 py-2.5 rounded-xl text-sm border border-red-600/30
+           transition-all duration-150 focus:outline-none focus:ring-2
+           focus:ring-red-500 active:scale-95;
+  }
+
+  .badge-income {
+    @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-lg
+           bg-emerald-500/10 text-emerald-400 text-xs font-medium;
+  }
+  .badge-expense {
+    @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-lg
+           bg-red-500/10 text-red-400 text-xs font-medium;
+  }
+
+  .modal-backdrop {
+    @apply fixed inset-0 bg-black/70 backdrop-blur-sm z-40 flex items-center justify-center p-4
+           animate-fade-in;
+  }
+  .modal-box {
+    @apply bg-slate-900 border border-slate-800 rounded-2xl w-full max-w-md
+           shadow-2xl animate-slide-up z-50 max-h-[90vh] overflow-y-auto;
+  }
+
+  .page-title  { @apply text-2xl font-semibold text-slate-100 tracking-tight; }
+  .page-subtitle { @apply text-sm text-slate-500; }
+}
+
+/*
+ * ─── SELECT / DATE / TIME DARK THEME OVERRIDES ───────────────────────────────
+ * These MUST live outside @layer so they have higher cascade priority than
+ * Tailwind's generated .input and .input:focus utilities.
+ * Using :where() on the Tailwind side means plain CSS always wins here.
+ */
+
+/* All selects — background + text, normal AND focused state */
+select.input,
+select.input:focus,
+select.input:hover {
+  background-color: #1e293b !important;
+  color: #f1f5f9 !important;
+  -webkit-text-fill-color: #f1f5f9 !important;
+}
+
+/* Option list inside select */
+select.input option {
+  background-color: #1e293b !important;
+  color: #f1f5f9 !important;
+}
+
+/* Date + time picker: dark color-scheme so browser renders controls dark */
+input[type="date"].input,
+input[type="time"].input {
+  color-scheme: dark;
+  color: #f1f5f9 !important;
+  -webkit-text-fill-color: #f1f5f9 !important;
+}
+
+/* Make the calendar / clock icon white */
+input[type="date"].input::-webkit-calendar-picker-indicator,
+input[type="time"].input::-webkit-calendar-picker-indicator {
+  filter: invert(1) opacity(0.65);
+  cursor: pointer;
+}
