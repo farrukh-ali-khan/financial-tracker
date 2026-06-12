@@ -3,8 +3,11 @@ name: Build & Release Financial Tracker
 on:
   push:
     tags:
-      - 'v*'           # Run when you push a tag like: git tag v1.0.0 && git push --tags
-  workflow_dispatch:   # Also allows manual trigger from GitHub website
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -12,61 +15,39 @@ jobs:
       fail-fast: false
       matrix:
         include:
-          # Linux
           - platform: ubuntu-22.04
             target: x86_64-unknown-linux-gnu
-            label: Linux
-
-          # Windows
           - platform: windows-latest
             target: x86_64-pc-windows-msvc
-            label: Windows
-
-          # macOS Apple Silicon (M1/M2/M3)
           - platform: macos-latest
             target: aarch64-apple-darwin
-            label: macOS-ARM
-
-          # macOS Intel
           - platform: macos-13
             target: x86_64-apple-darwin
-            label: macOS-Intel
 
     runs-on: ${{ matrix.platform }}
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node.js 20
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
 
-      - name: Setup Rust (stable)
-        uses: dtolnay/rust-toolchain@stable
+      - uses: dtolnay/rust-toolchain@stable
         with:
           targets: ${{ matrix.target }}
 
-      # Linux only — install system dependencies
-      - name: Install Linux system dependencies
+      - name: Install Linux dependencies
         if: matrix.platform == 'ubuntu-22.04'
         run: |
           sudo apt-get update
           sudo apt-get install -y \
-            libwebkit2gtk-4.1-dev \
-            libappindicator3-dev \
-            librsvg2-dev \
-            patchelf \
-            libxdo-dev \
-            libssl-dev \
-            pkg-config
+            libwebkit2gtk-4.1-dev libappindicator3-dev \
+            librsvg2-dev patchelf libxdo-dev libssl-dev pkg-config
 
-      - name: Install npm packages
-        run: npm install
+      - run: npm install
 
-      - name: Build & create release
-        uses: tauri-apps/tauri-action@v0
+      - uses: tauri-apps/tauri-action@v0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -74,13 +55,9 @@ jobs:
           releaseName: 'Financial Tracker ${{ github.ref_name }}'
           releaseBody: |
             ## Download for your platform:
-
-            - **Linux** → `.AppImage` (portable, no install) or `.deb` (Ubuntu/Debian)
-            - **Windows** → `.msi` installer
+            - **Linux** → `.AppImage` (portable) or `.deb` (Ubuntu/Debian)
+            - **Windows** → `.msi` or `.exe` installer
             - **macOS** → `.dmg` (drag to Applications)
-
-            ### What's new
-            See commit history for changes.
           releaseDraft: false
           prerelease: false
           args: --target ${{ matrix.target }}
